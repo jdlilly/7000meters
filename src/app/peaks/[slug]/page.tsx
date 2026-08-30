@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 
+export const revalidate = 60;
+
 type Peak = {
   name: string;
   elevationM: number;

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 
+export const revalidate = 60;
+
 type PeakListItem = {
   _id: string;
   name: string;
