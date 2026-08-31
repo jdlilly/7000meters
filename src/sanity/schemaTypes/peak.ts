@@ -93,6 +93,24 @@ export const peak = defineType({
       type: "boolean",
       initialValue: true,
     }),
+      defineField({
+      name: "heroImage",
+      title: "Hero photo",
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alt text",
+          type: "string",
+        }),
+        defineField({
+          name: "credit",
+          title: "Photo credit",
+          type: "string",
+        }),
+      ],
+    }),
     defineField({
       name: "overview",
       title: "Overview",
