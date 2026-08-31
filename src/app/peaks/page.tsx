@@ -10,6 +10,7 @@ type PeakListItem = {
   elevationM: number;
   class: string;
   countries?: string[];
+  range?: string;
 };
 
 export default async function PeaksPage() {
@@ -20,28 +21,77 @@ export default async function PeaksPage() {
       "slug": slug.current,
       elevationM,
       class,
-      countries
+      countries,
+      range
     }`
   );
 
+  const independentCount = peaks.filter((p) => p.class !== "subsidiary").length;
+
   return (
-    <main style={{ maxWidth: 720, margin: "40px auto", padding: "0 16px" }}>
-      <h1>7000-meter peaks</h1>
-      <p>Independent peaks have ≥ 500 m prominence. Subsidiaries are listed but not ranked the same way.</p>
-      {peaks.length === 0 ? (
-        <p>No peaks published yet. Add one in Studio.</p>
-      ) : (
-        <ol>
-          {peaks.map((peak) => (
-            <li key={peak._id}>
-              <Link href={`/peaks/${peak.slug}`}>
-                {peak.name} — {peak.elevationM} m
-              </Link>
-              {peak.class === "subsidiary" ? " (subsidiary)" : ""}
-            </li>
-          ))}
-        </ol>
-      )}
+    <main className="min-h-screen bg-stone-50 text-stone-900">
+      <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+        <p className="text-sm text-stone-500">
+          <Link href="/" className="hover:text-stone-800">
+            ← Home
+          </Link>
+        </p>
+
+        <p className="mt-8 text-xs uppercase tracking-[0.18em] text-slate-600">
+          Ordered by elevation
+        </p>
+
+        <h1 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
+          Peaks
+        </h1>
+
+        <p className="mt-4 text-stone-600">
+          {independentCount} independent
+          {peaks.length !== independentCount
+            ? ` · ${peaks.length - independentCount} named subsidiaries`
+            : ""}
+        </p>
+
+        {peaks.length === 0 ? (
+          <p className="mt-10 text-stone-600">No peaks published yet.</p>
+        ) : (
+          <ol className="mt-10">
+            {peaks.map((peak, index) => {
+              const subsidiary = peak.class === "subsidiary";
+              return (
+                <li
+                  key={peak._id}
+                  className="grid grid-cols-[2rem_1fr_auto] items-baseline gap-x-3 border-t border-stone-300 py-3"
+                >
+                  <span className="text-sm tabular-nums text-stone-400">
+                    {subsidiary ? "—" : index + 1}
+                  </span>
+                  <div>
+                    <Link
+                      href={`/peaks/${peak.slug}`}
+                      className="text-stone-900 hover:text-slate-700"
+                    >
+                      {peak.name}
+                    </Link>
+                    <p className="mt-0.5 text-sm text-stone-500">
+                      {[
+                        peak.range,
+                        peak.countries?.join(" · "),
+                        subsidiary ? "subsidiary" : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </p>
+                  </div>
+                  <span className="tabular-nums text-stone-800">
+                    {peak.elevationM} m
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </article>
     </main>
   );
 }
