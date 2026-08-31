@@ -7,22 +7,40 @@ export const revalidate = 60;
 
 type Peak = {
   name: string;
+  namesOther?: string[];
   elevationM: number;
   prominenceM?: number;
   class: string;
   countries?: string[];
   range?: string;
   subrange?: string;
+  lat?: number;
+  lon?: number;
   firstAscentYear?: number;
   climbed?: boolean;
   overview?: string;
-  namesOther?: string[];
   heroImage?: {
     alt?: string;
     credit?: string;
     asset?: { _ref?: string };
   };
 };
+
+function formatCoord(lat?: number, lon?: number) {
+  if (lat === undefined || lon === undefined) return "—";
+  const ns = lat >= 0 ? "N" : "S";
+  const ew = lon >= 0 ? "E" : "W";
+  return `${Math.abs(lat).toFixed(4)}° ${ns} / ${Math.abs(lon).toFixed(4)}° ${ew}`;
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border-t border-stone-300 py-3">
+      <dt className="text-xs uppercase tracking-wider text-stone-500">{label}</dt>
+      <dd className="mt-1 text-stone-900">{value}</dd>
+    </div>
+  );
+}
 
 export default async function PeakPage({
   params,
@@ -33,7 +51,7 @@ export default async function PeakPage({
   const peak = await client.fetch<Peak | null>(
     `*[_type == "peak" && slug.current == $slug][0]{
       name, namesOther, elevationM, prominenceM, class, countries,
-      range, subrange, firstAscentYear, climbed, overview, heroImage
+      range, subrange, lat, lon, firstAscentYear, climbed, overview, heroImage
     }`,
     { slug }
   );
@@ -44,71 +62,105 @@ export default async function PeakPage({
     ? urlFor(peak.heroImage).width(1600).height(900).fit("crop").url()
     : null;
 
+  const place = [peak.range, peak.subrange].filter(Boolean).join(" / ");
+  const countries = peak.countries?.join(" · ");
+  const classLabel =
+    peak.class === "subsidiary" ? "Named subsidiary" : "Independent peak";
+
   return (
-    <main style={{ maxWidth: 800, margin: "40px auto", padding: "0 16px" }}>
-      <p>
-        <Link href="/peaks">← All peaks</Link>
-      </p>
+    <main className="min-h-screen bg-stone-50 text-stone-900">
+      <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+        <p className="text-sm text-stone-500">
+          <Link href="/peaks" className="hover:text-stone-800">
+            ← All peaks
+          </Link>
+        </p>
 
-      <h1>{peak.name}</h1>
-      {peak.namesOther?.length ? (
-        <p style={{ color: "#555" }}>{peak.namesOther.join(" · ")}</p>
-      ) : null}
+        <p className="mt-8 text-xs uppercase tracking-[0.18em] text-slate-600">
+          {[place, countries].filter(Boolean).join(" · ") || "7000-meter peak"}
+        </p>
 
-      {photoUrl ? (
-        <figure style={{ margin: "24px 0" }}>
-          <img
-            src={photoUrl}
-            alt={peak.heroImage?.alt || peak.name}
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-          {peak.heroImage?.credit ? (
-            <figcaption style={{ color: "#555", fontSize: 14, marginTop: 8 }}>
-              Photo: {peak.heroImage.credit}
-            </figcaption>
+        <h1 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
+          {peak.name}
+        </h1>
+
+        {peak.namesOther?.length ? (
+          <p className="mt-2 text-stone-500">{peak.namesOther.join(" · ")}</p>
+        ) : null}
+
+        <p className="mt-4 text-lg text-stone-700">
+          {peak.elevationM} m
+          <span className="mx-2 text-stone-300">·</span>
+          {classLabel}
+          {peak.firstAscentYear ? (
+            <>
+              <span className="mx-2 text-stone-300">·</span>
+              first ascent {peak.firstAscentYear}
+            </>
+          ) : peak.climbed === false ? (
+            <>
+              <span className="mx-2 text-stone-300">·</span>
+              unclimbed
+            </>
           ) : null}
-        </figure>
-      ) : null}
+        </p>
 
-      <dl
-        style={{
-          display: "grid",
-          gridTemplateColumns: "160px 1fr",
-          rowGap: 8,
-          columnGap: 16,
-        }}
-      >
-        <dt>Elevation</dt>
-        <dd>{peak.elevationM} m</dd>
+        {photoUrl ? (
+          <figure className="mt-8">
+            <img
+              src={photoUrl}
+              alt={peak.heroImage?.alt || peak.name}
+              className="aspect-video w-full object-cover"
+            />
+            {peak.heroImage?.credit ? (
+              <figcaption className="mt-2 text-sm text-stone-500">
+                Photo: {peak.heroImage.credit}
+              </figcaption>
+            ) : null}
+          </figure>
+        ) : (
+          <div className="mt-8 flex aspect-video items-end bg-slate-800 p-6 text-stone-100">
+            <p className="font-serif text-5xl tabular-nums">{peak.elevationM} m</p>
+          </div>
+        )}
 
-        <dt>Prominence</dt>
-        <dd>{peak.prominenceM ? `${peak.prominenceM} m` : "—"}</dd>
+        <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-x-10">
+          <Stat label="Elevation" value={`${peak.elevationM} m`} />
+          <Stat
+            label="Prominence"
+            value={peak.prominenceM ? `${peak.prominenceM} m` : "—"}
+          />
+          <Stat label="Class" value={classLabel} />
+          <Stat label="Range" value={place || "—"} />
+          <Stat label="Countries" value={countries || "—"} />
+          <Stat label="Coordinates" value={formatCoord(peak.lat, peak.lon)} />
+          <Stat
+            label="First ascent"
+            value={
+              peak.firstAscentYear
+                ? String(peak.firstAscentYear)
+                : peak.climbed === false
+                  ? "Unclimbed"
+                  : "—"
+            }
+          />
+          <Stat
+            label="Climbed"
+            value={peak.climbed === false ? "No" : "Yes"}
+          />
+        </dl>
 
-        <dt>Class</dt>
-        <dd>{peak.class}</dd>
-
-        <dt>Range</dt>
-        <dd>
-          {peak.range || "—"}
-          {peak.subrange ? ` / ${peak.subrange}` : ""}
-        </dd>
-
-        <dt>Countries</dt>
-        <dd>{peak.countries?.length ? peak.countries.join(", ") : "—"}</dd>
-
-        <dt>First ascent</dt>
-        <dd>{peak.firstAscentYear ?? "—"}</dd>
-
-        <dt>Climbed</dt>
-        <dd>{peak.climbed === false ? "No / unclimbed" : "Yes"}</dd>
-      </dl>
-
-      {peak.overview ? (
-        <>
-          <h2>Overview</h2>
-          <p style={{ lineHeight: 1.6 }}>{peak.overview}</p>
-        </>
-      ) : null}
+        {peak.overview ? (
+          <section className="mt-12">
+            <h2 className="text-xs uppercase tracking-[0.18em] text-slate-600">
+              Overview
+            </h2>
+            <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
+              {peak.overview}
+            </p>
+          </section>
+        ) : null}
+      </article>
     </main>
   );
 }
