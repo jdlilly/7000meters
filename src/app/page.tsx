@@ -9,7 +9,7 @@ export default function HomePage() {
         </p>
 
         <h1 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
-          7000meters
+          7000 meters
         </h1>
 
         <p className="mt-6 max-w-prose text-lg leading-8 text-stone-800">
@@ -18,11 +18,26 @@ export default function HomePage() {
           own pages and are marked as such.
         </p>
 
-        <p className="mt-10 text-sm">
-          <Link href="/peaks" className="text-slate-700 hover:text-stone-900">
-            Browse peaks by height →
-          </Link>
-        </p>
+        <nav className="mt-10 space-y-2 text-sm">
+          <p>
+            <Link href="/peaks" className="text-slate-700 hover:text-stone-900">
+              By height →
+            </Link>
+          </p>
+          <p>
+            <Link href="/ranges" className="text-slate-700 hover:text-stone-900">
+              By range →
+            </Link>
+          </p>
+          <p>
+            <Link
+              href="/countries"
+              className="text-slate-700 hover:text-stone-900"
+            >
+              By country →
+            </Link>
+          </p>
+        </nav>
       </article>
     </main>
   );
