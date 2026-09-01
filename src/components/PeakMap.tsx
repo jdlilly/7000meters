@@ -15,17 +15,27 @@ export type MapPeak = {
 
 const STYLE = "https://tiles.openfreemap.org/styles/liberty";
 
-export function PeakMap({ peaks }: { peaks: MapPeak[] }) {
-  const [popup, setPopup] = useState<MapPeak | null>(null);
+export function PeakMap({
+  peaks,
+  highlightedSlug,
+  longitude = 78,
+  latitude = 32,
+  zoom = 4,
+}: {
+  peaks: MapPeak[];
+  highlightedSlug?: string;
+  longitude?: number;
+  latitude?: number;
+  zoom?: number;
+}) {
+  const [popup, setPopup] = useState<MapPeak | null>(
+    peaks.find((peak) => peak.slug === highlightedSlug) ?? null
+  );
 
   return (
     <div className="h-[70vh] w-full overflow-hidden border border-stone-300">
       <Map
-        initialViewState={{
-          longitude: 78,
-          latitude: 32,
-          zoom: 4,
-        }}
+        initialViewState={{ longitude, latitude, zoom }}
         mapStyle={STYLE}
         onClick={() => setPopup(null)}
       >
@@ -43,8 +53,12 @@ export function PeakMap({ peaks }: { peaks: MapPeak[] }) {
             <button
               type="button"
               title={peak.name}
-              className={`block h-2.5 w-2.5 rounded-full border border-stone-800 ${
-                peak.class === "subsidiary" ? "bg-stone-100" : "bg-stone-800"
+              className={`block rounded-full border ${
+                peak.slug === highlightedSlug
+                  ? "h-5 w-5 border-blue-800 bg-blue-700"
+                  : peak.class === "subsidiary"
+                    ? "h-2.5 w-2.5 border-blue-800 bg-blue-100"
+                    : "h-2.5 w-2.5 border-blue-800 bg-blue-700"
               }`}
             />
           </Marker>

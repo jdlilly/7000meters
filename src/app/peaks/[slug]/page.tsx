@@ -1,8 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Header } from "@/components/Header";
+import { PeakMapLoader } from "@/components/PeakMapLoader";
+import type { MapPeak } from "@/components/PeakMap";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { Header } from "@/components/Header";
 
 export const revalidate = 60;
 
@@ -59,6 +60,17 @@ export default async function PeakPage({
 
   if (!peak) notFound();
 
+  const mapPeaks = await client.fetch<MapPeak[]>(
+    `*[_type == "peak" && defined(slug.current) && defined(lat) && defined(lon)]{
+      name,
+      "slug": slug.current,
+      elevationM,
+      class,
+      lat,
+      lon
+    }`
+  );
+
   const photoUrl = peak.heroImage
     ? urlFor(peak.heroImage).width(1600).height(900).fit("crop").url()
     : null;
@@ -72,8 +84,7 @@ export default async function PeakPage({
     <main className="min-h-screen bg-stone-50 text-stone-900">
       <Header />
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-
-        <p className="mt-8 text-xs uppercase tracking-[0.18em] text-slate-600">
+        <p className="text-xs uppercase tracking-[0.18em] text-slate-600">
           {[place, countries].filter(Boolean).join(" · ") || "7000-meter peak"}
         </p>
 
@@ -117,7 +128,9 @@ export default async function PeakPage({
           </figure>
         ) : (
           <div className="mt-8 flex aspect-video items-end bg-slate-800 p-6 text-stone-100">
-            <p className="font-serif text-5xl tabular-nums">{peak.elevationM} m</p>
+            <p className="font-serif text-5xl tabular-nums">
+              {peak.elevationM} m
+            </p>
           </div>
         )}
 
@@ -155,6 +168,26 @@ export default async function PeakPage({
             <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
               {peak.overview}
             </p>
+          </section>
+        ) : null}
+
+        {peak.lat !== undefined && peak.lon !== undefined ? (
+          <section className="mt-12">
+            <h2 className="text-xs uppercase tracking-[0.18em] text-slate-600">
+              Location
+            </h2>
+            <p className="mt-2 mb-4 text-sm text-stone-500">
+              <a href="/map" className="hover:text-stone-800">
+                See all peaks on the map →
+              </a>
+            </p>
+            <PeakMapLoader
+              peaks={mapPeaks}
+              highlightedSlug={slug}
+              longitude={peak.lon}
+              latitude={peak.lat}
+              zoom={8}
+            />
           </section>
         ) : null}
       </article>
