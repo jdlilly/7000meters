@@ -1,8 +1,11 @@
 import Link from "next/link";
+import { Header } from "@/components/Header";
+
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
+      <Header />
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <p className="text-xs uppercase tracking-[0.18em] text-slate-600">
           A reference for seven-thousanders

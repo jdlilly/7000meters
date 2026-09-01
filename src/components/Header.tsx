@@ -1,0 +1,33 @@
+import Link from "next/link";
+
+const links = [
+  { href: "/peaks", label: "By height" },
+  { href: "/ranges", label: "By range" },
+  { href: "/countries", label: "By country" },
+];
+
+export function Header() {
+  return (
+    <header className="border-b border-stone-200 bg-stone-50">
+      <div className="mx-auto flex max-w-3xl flex-wrap items-baseline justify-between gap-3 px-4 py-4 sm:px-6">
+        <Link
+          href="/"
+          className="font-serif text-lg text-stone-900 hover:text-slate-700"
+        >
+          7000 meters
+        </Link>
+        <nav className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-stone-600">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:text-stone-900"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+}

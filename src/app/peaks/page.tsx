@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
+import { Header } from "@/components/Header";
 
 export const revalidate = 60;
 
@@ -30,12 +31,8 @@ export default async function PeaksPage() {
 
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
+      <Header />
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-        <p className="text-sm text-stone-500">
-          <Link href="/" className="hover:text-stone-800">
-            ← Home
-          </Link>
-        </p>
 
         <p className="mt-8 text-xs uppercase tracking-[0.18em] text-slate-600">
           Ordered by elevation

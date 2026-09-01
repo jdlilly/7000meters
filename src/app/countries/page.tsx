@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
+import { Header } from "@/components/Header";
 
 export const revalidate = 60;
 
@@ -36,18 +37,13 @@ export default async function CountriesPage() {
 
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
+      <Header />
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <p className="text-sm text-stone-500">
-          <Link href="/" className="hover:text-stone-800">
-            ← Home
-          </Link>
           <span className="mx-2 text-stone-300">·</span>
-          <Link href="/peaks" className="hover:text-stone-800">
-            By height
-          </Link>
         </p>
 
-        <p className="mt-8 text-xs uppercase tracking-[0.18em] text-slate-600">
+        <p className="text-xs uppercase tracking-[0.18em] text-slate-600">
           Grouped by country
         </p>
         <h1 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">

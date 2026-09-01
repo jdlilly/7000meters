@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
+import { Header } from "@/components/Header";
 
 export const revalidate = 60;
 
@@ -69,12 +70,8 @@ export default async function PeakPage({
 
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
+      <Header />
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-        <p className="text-sm text-stone-500">
-          <Link href="/peaks" className="hover:text-stone-800">
-            ← All peaks
-          </Link>
-        </p>
 
         <p className="mt-8 text-xs uppercase tracking-[0.18em] text-slate-600">
           {[place, countries].filter(Boolean).join(" · ") || "7000-meter peak"}
