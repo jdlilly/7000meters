@@ -28,9 +28,7 @@ export function PeakMap({
   latitude?: number;
   zoom?: number;
 }) {
-  const [popup, setPopup] = useState<MapPeak | null>(
-    peaks.find((peak) => peak.slug === highlightedSlug) ?? null
-  );
+  const [popup, setPopup] = useState<MapPeak | null>(null);
 
   return (
     <div className="h-[70vh] w-full overflow-hidden border border-stone-300">
