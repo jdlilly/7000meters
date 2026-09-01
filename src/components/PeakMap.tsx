@@ -27,7 +27,6 @@ export function PeakMap({ peaks }: { peaks: MapPeak[] }) {
           zoom: 4,
         }}
         mapStyle={STYLE}
-        attributionControl
         onClick={() => setPopup(null)}
       >
         {peaks.map((peak) => (
