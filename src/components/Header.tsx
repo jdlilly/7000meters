@@ -5,6 +5,7 @@ const links = [
   { href: "/ranges", label: "By range" },
   { href: "/countries", label: "By country" },
     { href: "/map", label: "Map" },
+     { href: "/methodology", label: "Methodology" },
 ];
 
 export function Header() {

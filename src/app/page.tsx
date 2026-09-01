@@ -19,6 +19,10 @@ export default function HomePage() {
           A catalog of mountains between 7,000 and 8,000 meters. Independent
           peaks have at least 500 m of prominence. Named subsidiaries get their
           own pages and are marked as such.
+                    <Link href="/methodology" className="text-slate-700 hover:text-stone-900">
+            Read the methodology
+          </Link>
+
         </p>
 
         <nav className="mt-10 space-y-2 text-sm">
