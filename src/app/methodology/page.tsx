@@ -53,7 +53,16 @@ export default function MethodologyPage() {
             lists of mountains above 7,200 m, plus widely named 7,000–7,199 m
             summits. Unnamed bumps over 7,000 m are omitted on purpose.
           </p>
+
+          <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
+            Peaks with no accepted ascent are listed on the{" "}
+            <a href="/unclimbed" className="text-slate-700 hover:text-stone-900">
+              unclimbed
+            </a>{" "}
+            page.
+          </p>
         </section>
+
 
         <section className="mt-10">
           <h2 className="font-serif text-2xl">Corrections</h2>
