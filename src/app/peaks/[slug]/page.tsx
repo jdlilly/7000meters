@@ -165,9 +165,15 @@ export default async function PeakPage({
             <h2 className="text-xs uppercase tracking-[0.18em] text-slate-600">
               Overview
             </h2>
-            <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
-              {peak.overview}
-            </p>
+            <div className="mt-4 max-w-prose space-y-4 text-lg leading-8 text-stone-800">
+              {peak.overview
+                .split(/\n\s*\n/)
+                .map((paragraph) => paragraph.trim())
+                .filter(Boolean)
+                .map((paragraph) => (
+                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                ))}
+            </div>
           </section>
         ) : null}
 
