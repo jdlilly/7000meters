@@ -12,6 +12,9 @@ export function Footer() {
           <Link href="/unclimbed" className="hover:text-stone-800">
             Unclimbed
           </Link>
+            <Link href="/sources" className="hover:text-stone-800">
+            Sources
+          </Link>
         </nav>
       </div>
     </footer>
