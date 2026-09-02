@@ -15,7 +15,7 @@ export function Header() {
           href="/"
           className="font-serif text-lg text-stone-900 hover:text-slate-700"
         >
-          7000meters
+          7000 meters
         </Link>
         <nav className="flex flex-wrap justify-end gap-x-4 gap-y-1 text-sm text-stone-600">
           {links.map((link) => (
