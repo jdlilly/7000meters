@@ -20,6 +20,7 @@ type Peak = {
   lon?: number;
   firstAscentYear?: number;
   climbed?: boolean;
+  guided?: boolean;
   overview?: string;
   heroImage?: {
     alt?: string;
@@ -53,7 +54,8 @@ export default async function PeakPage({
   const peak = await client.fetch<Peak | null>(
     `*[_type == "peak" && slug.current == $slug][0]{
       name, namesOther, elevationM, prominenceM, class, countries,
-      range, subrange, lat, lon, firstAscentYear, climbed, overview, heroImage
+      range, subrange, lat, lon, firstAscentYear, climbed, guided,
+      overview, heroImage
     }`,
     { slug }
   );
@@ -158,6 +160,10 @@ export default async function PeakPage({
             label="Climbed"
             value={peak.climbed === false ? "No" : "Yes"}
           />
+          <Stat
+            label="Guided"
+            value={peak.guided ? "Yes — commercial trips" : "No"}
+          />
         </dl>
 
         {peak.overview ? (
@@ -171,7 +177,7 @@ export default async function PeakPage({
                 .map((paragraph) => paragraph.trim())
                 .filter(Boolean)
                 .map((paragraph) => (
-                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
                 ))}
             </div>
           </section>

@@ -25,31 +25,10 @@ export const peak = defineType({
       of: [{ type: "string" }],
     }),
     defineField({
-      name: "class",
-      title: "Class",
-      type: "string",
-      options: {
-        list: [
-          { title: "Independent (≥ 500 m prominence)", value: "independent" },
-          { title: "Named subsidiary", value: "subsidiary" },
-        ],
-        layout: "radio",
-      },
-      initialValue: "independent",
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "parent",
-      title: "Parent peak",
-      type: "reference",
-      to: [{ type: "peak" }],
-      hidden: ({ document }) => document?.class !== "subsidiary",
-    }),
-    defineField({
       name: "elevationM",
       title: "Elevation (m)",
       type: "number",
-      validation: (rule) => rule.required().min(7000).max(7999.9),
+      validation: (rule) => rule.required().min(7000).max(7999),
     }),
     defineField({
       name: "prominenceM",
@@ -57,14 +36,18 @@ export const peak = defineType({
       type: "number",
     }),
     defineField({
-      name: "lat",
-      title: "Latitude",
-      type: "number",
-    }),
-    defineField({
-      name: "lon",
-      title: "Longitude",
-      type: "number",
+      name: "class",
+      title: "Class",
+      type: "string",
+      options: {
+        list: [
+          { title: "Independent", value: "independent" },
+          { title: "Named subsidiary", value: "subsidiary" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "independent",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "countries",
@@ -83,17 +66,42 @@ export const peak = defineType({
       type: "string",
     }),
     defineField({
+      name: "lat",
+      title: "Latitude",
+      type: "number",
+    }),
+    defineField({
+      name: "lon",
+      title: "Longitude",
+      type: "number",
+    }),
+    defineField({
       name: "firstAscentYear",
       title: "First ascent year",
       type: "number",
     }),
     defineField({
       name: "climbed",
-      title: "Has been climbed",
+      title: "Climbed",
       type: "boolean",
+      description: "Accepted summit exists.",
       initialValue: true,
     }),
-      defineField({
+    defineField({
+      name: "guided",
+      title: "Guided",
+      type: "boolean",
+      description:
+        "At least two companies offer a guided climb to the summit.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "overview",
+      title: "Overview",
+      type: "text",
+      rows: 8,
+    }),
+    defineField({
       name: "heroImage",
       title: "Hero photo",
       type: "image",
@@ -111,19 +119,18 @@ export const peak = defineType({
         }),
       ],
     }),
-    defineField({
-      name: "overview",
-      title: "Overview",
-      type: "text",
-      rows: 6,
-    }),
   ],
   preview: {
-    select: { title: "name", subtitle: "elevationM" },
-    prepare({ title, subtitle }) {
+    select: {
+      title: "name",
+      elevationM: "elevationM",
+      media: "heroImage",
+    },
+    prepare({ title, elevationM, media }) {
       return {
         title,
-        subtitle: subtitle ? `${subtitle} m` : "No elevation",
+        subtitle: elevationM ? `${elevationM} m` : "No elevation",
+        media,
       };
     },
   },

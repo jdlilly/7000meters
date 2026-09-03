@@ -61,13 +61,22 @@ export default function MethodologyPage() {
             </a>{" "}
             page.
           </p>
+
+          <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
+            Peaks that have commercial climbing guiding by at least two companies are listed on the{" "}
+            <a href="/guided" className="text-slate-700 hover:text-stone-900">
+              guided
+            </a>{" "}
+            page.
+          </p>
         </section>
 
 
         <section className="mt-10">
           <h2 className="font-serif text-2xl">Corrections</h2>
           <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
-            The catalog is edited in public. If a height, country, or first
+            The catalog is edited in public. A short list of references is on the Sources page.
+            If a height, country, or first
             ascent is wrong, it will be updated in place. The site does not yet
             keep a public changelog.
           </p>
