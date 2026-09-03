@@ -16,7 +16,7 @@ type PeakListItem = {
 
 export default async function GuidedPage() {
   const peaks = await client.fetch<PeakListItem[]>(
-    `*[_type == "peak" && defined(slug.current) && guided == true] | order(elevationM desc) {
+    `*[_type == "peak" && defined(slug.current) && count(outfitters) >= 2] | order(elevationM desc) {
       _id,
       name,
       "slug": slug.current,

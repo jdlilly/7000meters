@@ -21,6 +21,7 @@ type Peak = {
   firstAscentYear?: number;
   climbed?: boolean;
   guided?: boolean;
+  outfitters?: { name: string; url?: string }[];
   overview?: string;
   heroImage?: {
     alt?: string;
@@ -55,7 +56,7 @@ export default async function PeakPage({
     `*[_type == "peak" && slug.current == $slug][0]{
       name, namesOther, elevationM, prominenceM, class, countries,
       range, subrange, lat, lon, firstAscentYear, climbed, guided,
-      overview, heroImage
+      outfitters, overview, heroImage
     }`,
     { slug }
   );
@@ -81,6 +82,7 @@ export default async function PeakPage({
   const countries = peak.countries?.join(" · ");
   const classLabel =
     peak.class === "subsidiary" ? "Named subsidiary" : "Independent peak";
+  const isGuided = (peak.outfitters?.length ?? 0) >= 2;
 
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
@@ -162,7 +164,7 @@ export default async function PeakPage({
           />
           <Stat
             label="Guided"
-            value={peak.guided ? "Yes — commercial trips" : "No"}
+            value={isGuided ? "Yes — commercial trips" : "No"}
           />
         </dl>
 
@@ -180,6 +182,35 @@ export default async function PeakPage({
                   <p key={paragraph.slice(0, 48)}>{paragraph}</p>
                 ))}
             </div>
+          </section>
+        ) : null}
+
+        {peak.outfitters && peak.outfitters.length > 0 ? (
+          <section className="mt-12">
+            <h2 className="text-xs uppercase tracking-[0.18em] text-slate-600">
+              Guiding companies
+            </h2>
+            <ul className="mt-4 max-w-prose space-y-2 text-stone-800">
+              {peak.outfitters.map((company) => (
+                <li key={company.name}>
+                  {company.url ? (
+                    <a
+                      href={company.url}
+                      className="text-slate-700 hover:text-stone-900"
+                      rel="nofollow noreferrer"
+                      target="_blank"
+                    >
+                      {company.name}
+                    </a>
+                  ) : (
+                    company.name
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-sm text-stone-500">
+              Listed because they advertise a trip. Not an endorsement.
+            </p>
           </section>
         ) : null}
 

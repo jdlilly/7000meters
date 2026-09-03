@@ -96,6 +96,33 @@ export const peak = defineType({
       initialValue: false,
     }),
     defineField({
+      name: "outfitters",
+      title: "Guiding companies",
+      type: "array",
+      description: "Companies that advertise a guided climb to this summit.",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Company",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "Website",
+              type: "url",
+            }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "url" },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "overview",
       title: "Overview",
       type: "text",

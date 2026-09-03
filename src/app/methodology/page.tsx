@@ -63,11 +63,12 @@ export default function MethodologyPage() {
           </p>
 
           <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
-            Peaks that have commercial climbing guiding by at least two companies are listed on the{" "}
+            Peaks that have commercial climbing guiding by at least two companies, 
+            each advertising a climb to the summit, are listed on the {" "}
             <a href="/guided" className="text-slate-700 hover:text-stone-900">
               guided
             </a>{" "}
-            page.
+            page.{" "}These are not recommendations of these guiding companies.
           </p>
         </section>
 
