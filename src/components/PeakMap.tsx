@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Map, { Marker, Popup, type MapRef } from "react-map-gl/maplibre";
+import { useState } from "react";
+import Map, { Marker, Popup } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 export type MapPeak = {
@@ -30,56 +30,11 @@ export function PeakMap({
   latitude = 32,
   zoom = 3.4,
 }: PeakMapProps) {
-  const mapRef = useRef<MapRef>(null);
   const [popup, setPopup] = useState<MapPeak | null>(null);
-  const [countries, setCountries] = useState<GeoJSON.FeatureCollection | null>(
-    null
-  );
-
-  useEffect(() => {
-    fetch("/data/countries.geojson")
-      .then((response) => {
-        if (!response.ok) throw new Error("countries.geojson missing");
-        return response.json();
-      })
-      .then((data) => setCountries(data))
-      .catch((error) => console.error("Country borders failed", error));
-  }, []);
-
-  useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map || !countries) return;
-
-    const addBorders = () => {
-      if (!map.getSource("countries")) {
-        map.addSource("countries", { type: "geojson", data: countries });
-      }
-      if (!map.getLayer("country-outline")) {
-        map.addLayer({
-          id: "country-outline",
-          type: "line",
-          source: "countries",
-          paint: {
-            "line-color": "#dc2626",
-            "line-width": 2.5,
-            "line-opacity": 1,
-          },
-        });
-      }
-    };
-
-    if (map.isStyleLoaded()) addBorders();
-    else map.once("load", addBorders);
-
-    return () => {
-      map.off("load", addBorders);
-    };
-  }, [countries]);
 
   return (
     <div className="h-[28rem] w-full overflow-hidden border border-stone-300 sm:h-[36rem]">
       <Map
-        ref={mapRef}
         initialViewState={{ longitude, latitude, zoom }}
         mapStyle={STYLE}
         onClick={() => setPopup(null)}
