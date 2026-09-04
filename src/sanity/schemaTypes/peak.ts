@@ -123,6 +123,34 @@ export const peak = defineType({
       ],
     }),
     defineField({
+      name: "links",
+      title: "Further reading",
+      type: "array",
+      description: "Peak-specific articles, route reports, and reference pages.",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "url",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: { title: "title", subtitle: "url" },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "overview",
       title: "Overview",
       type: "text",

@@ -22,6 +22,7 @@ type Peak = {
   climbed?: boolean;
   guided?: boolean;
   outfitters?: { name: string; url?: string }[];
+  links?: { title: string; url: string }[];
   overview?: string;
   heroImage?: {
     alt?: string;
@@ -56,7 +57,7 @@ export default async function PeakPage({
     `*[_type == "peak" && slug.current == $slug][0]{
       name, namesOther, elevationM, prominenceM, class, countries,
       range, subrange, lat, lon, firstAscentYear, climbed, guided,
-      outfitters, overview, heroImage
+      outfitters, links, overview, heroImage
     }`,
     { slug }
   );
@@ -196,7 +197,7 @@ export default async function PeakPage({
                   {company.url ? (
                     <a
                       href={company.url}
-                      className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
+                      className="font-medium text-slate-800 underline decoration-slate-400 underline-offset-2 hover:text-slate-950 hover:decoration-slate-800"
                       rel="nofollow noreferrer"
                       target="_blank"
                     >
@@ -211,6 +212,28 @@ export default async function PeakPage({
             <p className="mt-3 text-sm text-stone-500">
               Listed because they advertise a trip. Not an endorsement.
             </p>
+          </section>
+        ) : null}
+
+        {peak.links && peak.links.length > 0 ? (
+          <section className="mt-12">
+            <h2 className="text-xs uppercase tracking-[0.18em] text-slate-600">
+              Further reading
+            </h2>
+            <ul className="mt-4 max-w-prose space-y-2">
+              {peak.links.map((link) => (
+                <li key={link.url}>
+                  <a
+                    href={link.url}
+                    className="font-medium text-slate-800 underline decoration-slate-400 underline-offset-2 hover:text-slate-950 hover:decoration-slate-800"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {link.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </section>
         ) : null}
 
