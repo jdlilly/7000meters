@@ -196,7 +196,7 @@ export default async function PeakPage({
                   {company.url ? (
                     <a
                       href={company.url}
-                      className="text-slate-700 hover:text-stone-900"
+                      className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
                       rel="nofollow noreferrer"
                       target="_blank"
                     >
