@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Map, { Marker, Popup } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { Elevation } from "@/components/Units";
 
 export type MapPeak = {
   name: string;
@@ -78,7 +79,9 @@ export function PeakMap({
           >
             <a href={`/peaks/${popup.slug}`} className="text-sm text-stone-900">
               {popup.name}
-              <span className="block text-stone-500">{popup.elevationM} m</span>
+              <span className="block text-stone-500">
+                <Elevation m={popup.elevationM} />
+              </span>
             </a>
           </Popup>
         ) : null}
