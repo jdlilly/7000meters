@@ -56,7 +56,7 @@ export default function MethodologyPage() {
 
           <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
             Peaks with no accepted ascent are listed on the{" "}
-            <a href="/unclimbed" className="text-slate-700 hover:text-stone-900">
+            <a href="/unclimbed" className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600">
               unclimbed
             </a>{" "}
             page.
@@ -65,7 +65,7 @@ export default function MethodologyPage() {
           <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
             Peaks that have commercial climbing guiding by at least two companies, 
             each advertising a climb to the summit, are listed on the {" "}
-            <a href="/guided" className="text-slate-700 hover:text-stone-900">
+            <a href="/guided" className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600">
               guided
             </a>{" "}
             page.{" "}These are not recommendations of these guiding companies.
@@ -75,12 +75,16 @@ export default function MethodologyPage() {
 
         <section className="mt-10">
           <h2 className="font-serif text-2xl">Corrections</h2>
-          <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
-            The catalog is edited in public. A short list of references is on the Sources page.
-            If a height, country, or first
-            ascent is wrong, it will be updated in place. The site does not yet
-            keep a public changelog.
-          </p>
+  <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
+          If a height, country, or first ascent is wrong, please contact{" "}
+          <a
+            href="mailto:admin@7000meters.com"
+            className="font-medium text-slate-800 underline decoration-slate-400 underline-offset-2 hover:text-slate-950 hover:decoration-slate-800"
+          >
+            admin@7000meters.com
+          </a>
+          .
+        </p>
         </section>
       </article>
     </main>

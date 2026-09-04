@@ -24,7 +24,7 @@ export default function SourcesPage() {
             <li>
               <a
                 href="https://en.wikipedia.org/wiki/List_of_highest_mountains_on_Earth"
-                className="text-slate-700 hover:text-stone-900"
+                className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
               >
                 List of highest mountains on Earth
               </a>
@@ -33,7 +33,7 @@ export default function SourcesPage() {
             <li>
               <a
                 href="https://en.wikipedia.org/wiki/Highest_unclimbed_mountain"
-                className="text-slate-700 hover:text-stone-900"
+                className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
               >
                 Highest unclimbed mountain
               </a>
@@ -42,7 +42,7 @@ export default function SourcesPage() {
             <li>
               <a
                 href="https://www.peakbagger.com/"
-                className="text-slate-700 hover:text-stone-900"
+                className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
               >
                 Peakbagger
               </a>
@@ -51,7 +51,7 @@ export default function SourcesPage() {
             <li>
               <a
                 href="https://www.himalayandatabase.com/"
-                className="text-slate-700 hover:text-stone-900"
+                className="text-slate-700 underline decoration-blue-400 underline-offset-2 hover:text-stone-900 hover:decoration-stone-600"
               >
                 Himalayan Database
               </a>
@@ -61,50 +61,11 @@ export default function SourcesPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="font-serif text-2xl">Journals and reporting</h2>
-          <ul className="mt-4 max-w-prose list-disc space-y-3 pl-5 text-lg leading-8 text-stone-800">
-            <li>
-              <a
-                href="https://www.himalayanclub.org/hj/"
-                className="text-slate-700 hover:text-stone-900"
-              >
-                The Himalayan Journal
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://publications.americanalpineclub.org/"
-                className="text-slate-700 hover:text-stone-900"
-              >
-                American Alpine Journal
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://explorersweb.com/"
-                className="text-slate-700 hover:text-stone-900"
-              >
-                ExplorersWeb
-              </a>
-              — Recent first ascents and unclimbed-peak notes.
-            </li>
-            <li>
-              <a
-                href="https://www.alpinist.com/"
-                className="text-slate-700 hover:text-stone-900"
-              >
-                Alpinist
-              </a>
-            </li>
-          </ul>
-        </section>
-
-        <section className="mt-10">
           <h2 className="font-serif text-2xl">Photos</h2>
           <p className="mt-4 max-w-prose text-lg leading-8 text-stone-800">
             Hero photographs are credited on each peak page. Many come from
             Wikimedia Commons. Do not reuse a photo from this site without
-            checking that credit and licence.
+            checking that credit.
           </p>
         </section>
       </article>
