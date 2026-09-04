@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Header } from "@/components/Header";
-import { Analytics } from "@vercel/analytics/next"
 
 export default function HomePage() {
   return (

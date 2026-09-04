@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { Header } from "@/components/Header";
+import { Elevation } from "@/components/Units";
 
 export const revalidate = 60;
 
@@ -79,7 +80,7 @@ export default async function RangesPage() {
                     </p>
                   </div>
                   <span className="tabular-nums text-stone-800">
-                    {peak.elevationM} m
+                    <Elevation m={peak.elevationM} />
                   </span>
                 </li>
               ))}
