@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { client } from "@/sanity/lib/client";
+import { Elevation } from "@/components/Units";
 
 export const revalidate = 60;
 
@@ -92,7 +93,7 @@ export default async function GuidedPage() {
                   </p>
                 </div>
                 <span className="tabular-nums text-stone-800">
-                  {peak.elevationM} m
+                  <Elevation m={peak.elevationM} />
                 </span>
               </li>
             ))}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UnitToggle } from "@/components/Units";
 
 const links = [
   { href: "/peaks", label: "Peaks" },
@@ -17,7 +18,7 @@ export function Header() {
         >
           7000 meters
         </Link>
-        <nav className="flex flex-wrap justify-end gap-x-4 gap-y-1 text-sm text-stone-600">
+        <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-sm text-stone-600">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -27,6 +28,7 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <UnitToggle />
         </nav>
       </div>
     </header>

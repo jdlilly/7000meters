@@ -4,6 +4,7 @@ import { PeakMapLoader } from "@/components/PeakMapLoader";
 import type { MapPeak } from "@/components/PeakMap";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
+import { Elevation } from "@/components/Units";
 
 export const revalidate = 60;
 
@@ -38,7 +39,13 @@ function formatCoord(lat?: number, lon?: number) {
   return `${Math.abs(lat).toFixed(4)}° ${ns} / ${Math.abs(lon).toFixed(4)}° ${ew}`;
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+}: {
+  label: string;
+  value: React.ReactNode;
+}) {
   return (
     <div className="border-t border-stone-300 py-3">
       <dt className="text-xs uppercase tracking-wider text-stone-500">{label}</dt>
@@ -46,7 +53,6 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-
 export default async function PeakPage({
   params,
 }: {
@@ -102,7 +108,7 @@ export default async function PeakPage({
         ) : null}
 
         <p className="mt-4 text-lg text-stone-700">
-          {peak.elevationM} m
+          <Elevation m={peak.elevationM} />
           <span className="mx-2 text-stone-300">·</span>
           {classLabel}
           {peak.firstAscentYear ? (
@@ -134,16 +140,18 @@ export default async function PeakPage({
         ) : (
           <div className="mt-8 flex aspect-video items-end bg-slate-800 p-6 text-stone-100">
             <p className="font-serif text-5xl tabular-nums">
-              {peak.elevationM} m
+              <Elevation m={peak.elevationM} />
             </p>
           </div>
         )}
 
         <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 sm:gap-x-10">
-          <Stat label="Elevation" value={`${peak.elevationM} m`} />
+          <Stat label="Elevation" value={<Elevation m={peak.elevationM} />} />
           <Stat
             label="Prominence"
-            value={peak.prominenceM ? `${peak.prominenceM} m` : "—"}
+            value={
+              peak.prominenceM ? <Elevation m={peak.prominenceM} /> : "—"
+            }
           />
           <Stat label="Class" value={classLabel} />
           <Stat label="Range" value={place || "—"} />
