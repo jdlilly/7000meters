@@ -79,7 +79,7 @@ export default function MethodologyPage() {
           If a height, country, or first ascent is wrong, please contact{" "}
           <a
             href="mailto:admin@7000meters.com"
-            className="font-medium text-slate-800 underline decoration-slate-400 underline-offset-2 hover:text-slate-950 hover:decoration-slate-800"
+            className="font-medium text-slate-800 underline decoration-blue-400 underline-offset-2 hover:text-slate-950 hover:decoration-slate-800"
           >
             admin@7000meters.com
           </a>
